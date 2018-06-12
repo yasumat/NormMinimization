@@ -9,7 +9,7 @@ or a combination of different vector norms. A generalized norm approximation pro
 <p align="center">
 <img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5Csum_%7Bk%3D1%7D%5EK%20%5Clambda_k%20%5C%7C%5Cmathbf%7BA%7D_k%20%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D_k%20%5C%7C_%7Bp_k%7D%5E%7Bp_k%7D">
 </p>
-where <img src="http://latex.codecogs.com/gif.latex?k%3D%5Cleft%5C%7B1%2C%20%5Cldots%2C%20K%5Cright%5C%7D"> is the term index, 
+where <img src="http://latex.codecogs.com/gif.latex?%5Cinline%20k%3D%5C%7B1%2C%20%5Cldots%2C%20K%5C%7D"> is the term index, 
 <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7BA%7D_k%20%5Cin%20%5Cmathbb%7BR%7D%5E%7Bm_k%20%5Ctimes%20n%7D"/>
 and 
 <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7Bb%7D_k%20%5Cin%20%5Cmathbb%7BR%7D%5E%7Bm_k%7D"/>
