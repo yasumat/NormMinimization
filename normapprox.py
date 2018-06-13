@@ -5,7 +5,8 @@ import warnings
 def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=10000, tol=1.0e-8):
     """
     Solves a general norm approximation problem
-        minimize \sum_i 1/p_i * \lambda_i * ||A_i x - b_i||_{p_i}^{p_i}
+        minimize_x \sum_i \lambda_i * ||A_i x - b_i||_{p_i}^{p_i}
+
     :param A_list: List of matrices A_k \in \mathbb{R}^{m_k \times n}
     :param b_list: List of vectors b_k \in \mathbb{R}^{m_k}
     :param lambda_list: List of weighting scalar \lambda_k \in \mathbb{R}
@@ -15,7 +16,7 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
     :return: x \in \mathbb{R}^n
     """
 
-    alpha = 0.0    # small value for regularizing the weighted least squares
+    alpha = 1.0e-8   # small value for regularizing the weighted least squares
     eps = 1.0e-8    # small value for avoiding zero-division in weight update
 
     if A_list is None or b_list is None or lambda_list is None or p_list is None:
@@ -27,8 +28,9 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
         raise ValueError("lambda needs to be all positive")
     if any(p_list[a] < 0 for a in range(len(p_list))):
         raise ValueError("p needs to be all positive")
+
     n = A_list[0].shape[1]    # domain dim
-    xold = np.ones((n, 1))
+    x_old = np.ones((n, 1))
     In = np.identity(n)
     w_list = []
     e_list = []
@@ -36,94 +38,82 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
         w_list.append(np.identity(A_list[k].shape[0]))
         e_list.append(np.zeros((A_list[k].shape[0], 1)))
 
-    print(e_list)
     ite = 0
     while ite < max_iter:
         ite = ite + 1
-        A = alpha * In
-        b = np.zeros((n, 1))
+        C = alpha * In    # n \times n matrix
+        d = np.zeros((n, 1))    # n-vector
         # Create a normal equation of the problem
         for k in range(K):
-            A = A + p_list[k] * lambda_list[k] * \
-                np.dot(np.dot(np.dot(A_list[k].T, w_list[k].T), w_list[k]), A_list[k])
-            b = b + p_list[k] * lambda_list[k] * \
-                np.dot(np.dot(np.dot(A_list[k].T, w_list[k].T), w_list[k]), b_list[k])
+            C = C + p_list[k] * lambda_list[k] * np.dot(np.dot(A_list[k].T, w_list[k]), A_list[k])
+            d = d + p_list[k] * lambda_list[k] * np.dot(np.dot(A_list[k].T, w_list[k]), b_list[k])
 
-        x = np.linalg.solve(A, b)
+        x = np.linalg.solve(C, d)
+
         for k in range(K):
             e_list[k] = b_list[k] - A_list[k].dot(x)
 
-#        print('e_list:', e_list)
-        if np.linalg.norm(x - xold) < tol:
-            return x
+        # stopping criteria
+        if np.linalg.norm(x - x_old) < tol:
+            return x, ite
         else:
-            xold = x
+            x_old = x
+
         # update weights
         for k in range(K):
-            print("k, E: ", k, 1.0 / np.asarray(np.maximum(np.power(np.fabs(e_list[k]), 1.0 - p_list[k] / 2.0), eps))[:, 0])
             w_list[k] = np.diag(
-               np.asarray(1.0 / np.maximum(np.power(np.fabs(e_list[k]), 1.0 - p_list[k] / 2.0), eps))[:, 0])
+               np.asarray(1.0 / np.maximum(np.power(np.fabs(e_list[k]), 2.0 - p_list[k]), eps))[:, 0])
 
     warnings.warn("Exceeded the maximum number of iterations")
-    return x
+    return x, ite
 
+
+def f(x0, *args):
+    ret = 0
+    A_list = args[0]
+    b_list = args[1]
+    p_list = args[2]
+    lambda_list = args[3]
+    K = len(A_list)
+    for k in range(K):
+#        ret = ret + lambda_list[k] * np.power(np.linalg.norm(A_list[k] * x0 - b_list[k], ord=p_list[k]), p_list[k])
+#        print A_list[k].shape
+#        print x0.shape
+#        print b_list[k].shape
+        x = np.reshape(x0,(len(x0),1))
+        x = np.matrix(x,copy=False)
+        ret = ret + lambda_list[k] * np.power(np.linalg.norm(A_list[k] * x - b_list[k], ord=p_list[k]), p_list[k])
+    return ret
 
 def func01():
     np.random.seed(5)
-    m = 20
-    n = 10
+    m = 3
+    n = 6
     A = np.random.rand(m, n)
     x_gt = 3.0 * np.random.randn(n)
     inds = np.arange(n)
     np.random.shuffle(inds)
-#    x_gt[inds[5:]] = 0
+    x_gt[inds[2:]] = 0
     b = np.dot(A, x_gt)
     b = np.reshape(b, (m, 1))
     A_list = [A, np.identity(n)]
     b_list = [b, np.zeros((n, 1))]
     p_list = [2, 1]
-    lambda_list = [10.0, 1.0e-5]
+    lambda_list = [1000.0, 1.0e-5]
 
-    x1 = solve(A_list, b_list, p_list, lambda_list)
-
-    print(np.reshape(x_gt, (n, 1)))
+    x1 = solve(A_list=A_list, b_list=b_list, lambda_list=lambda_list, p_list=p_list)
     print(x1)
 
+    import scipy.optimize
+    x_init=np.random.rand(n,1)
+    data=(A_list, b_list, p_list, lambda_list,)
+    ret = scipy.optimize.minimize(f, x_init, args=data, method='BFGS',
+                                  options={'disp': True, 'maxiter': 10000, 'gtol': 1.0e-8, 'norm': 2})
+    x2 = ret.x
+    print(x2)
 
-def func02():
-    np.random.seed(5)
-    m = 20
-    n = 10
-    A = np.random.rand(m, n)
-    x_gt = 3.0 * np.random.randn(n)
-    b = np.dot(A, x_gt)
 
-    x = np.linalg.lstsq(A, b)[0]
-
-    print(x)
-    print(x_gt)
-
-def func03():
-    print(np.power(0, 1))
-    np.random.seed(5)
-    m = 5
-    n = 2
-    A = np.random.rand(m, n)
-    x_gt = 3.0 * np.random.randn(n)
-    inds = np.arange(n)
-    np.random.shuffle(inds)
-    x_gt[inds[5:]] = 0
-    b = np.dot(A, x_gt)
-    b = np.reshape(b, (m, 1))
-    A_list = [A]
-    b_list = [b]
-    p_list = [2]
-    lambda_list = [10.0]
-
-    x1 = solve(A_list, b_list, p_list, lambda_list)
-
-    print(np.reshape(x_gt, (n, 1)))
-    print(x1)
 
 if __name__=='__main__':
     func01()
+
