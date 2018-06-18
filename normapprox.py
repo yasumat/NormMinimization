@@ -87,8 +87,8 @@ def f(x0, *args):
 
 def func01():
     np.random.seed(5)
-    m = 3
-    n = 6
+    m = 5
+    n = 10
     A = np.random.rand(m, n)
     x_gt = 3.0 * np.random.randn(n)
     inds = np.arange(n)
@@ -99,16 +99,16 @@ def func01():
     A_list = [A, np.identity(n)]
     b_list = [b, np.zeros((n, 1))]
     p_list = [2, 1]
-    lambda_list = [1000.0, 1.0e-5]
+    lambda_list = [1.0, 1.0]
 
-    x1 = solve(A_list=A_list, b_list=b_list, lambda_list=lambda_list, p_list=p_list)
-    print(x1)
+    x1, ite1 = solve(A_list=A_list, b_list=b_list, lambda_list=lambda_list, p_list=p_list)
+    print(x1, ite1)
 
     import scipy.optimize
-    x_init=np.random.rand(n,1)
-    data=(A_list, b_list, p_list, lambda_list,)
+    x_init = np.random.rand(n, 1)
+    data = (A_list, b_list, p_list, lambda_list,)
     ret = scipy.optimize.minimize(f, x_init, args=data, method='BFGS',
-                                  options={'disp': True, 'maxiter': 10000, 'gtol': 1.0e-8, 'norm': 2})
+                                  options={'disp': False, 'maxiter': 10000, 'gtol': 1.0e-8, 'norm': 2})
     x2 = ret.x
     print(x2)
 
