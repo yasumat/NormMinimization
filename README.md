@@ -51,7 +51,10 @@ which corresponds to  <img src="http://latex.codecogs.com/gif.latex?k%3D3"/> and
 <img src="http://latex.codecogs.com/png.latex?%5Cleft%28%5Cmathbf%7BA%7D_1%2C%20%5Cmathbf%7BA%7D_2%2C%20%5Cmathbf%7BA%7D_3%2C%20%5Cmathbf%7Bb%7D_1%2C%20%5Cmathbf%7Bb%7D_2%2C%20%5Cmathbf%7Bb%7D_3%2C%20%5Clambda_1%2C%20%5Clambda_2%2C%20%5Clambda_3%2C%20p_1%2C%20p_2%2C%20p_3%20%5Cright%20%29%3D%5Cleft%28%5Cmathbf%7BA%7D%2C%20%5Cmathbf%7BI%7D%2C%20%5Cmathbf%7BI%7D%2C%20%5Cmathbf%7Bb%7D%2C%20%5Cmathbf%7B0%7D%2C%20%5Cmathbf%7B0%7D%2C%201%2C%20%5Calpha%2C%20%5Cbeta%2C%202%2C%201%2C%202%20%5Cright%20%29"/>.
  
 ### How to use?
- 
+
+
+### Examples
+
  
 ### Conditions of use
 

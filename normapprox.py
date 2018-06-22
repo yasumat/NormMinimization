@@ -28,6 +28,9 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
         raise ValueError("lambda needs to be all positive")
     if any(p_list[a] < 0 for a in range(len(p_list))):
         raise ValueError("p needs to be all positive")
+    for index in range(len(b_list)):
+        if b_list[index].ndim == 1:
+            b_list[index] = b_list[index][:, np.newaxis]
 
     n = A_list[0].shape[1]    # domain dim
     x_old = np.ones((n, 1))
@@ -76,19 +79,20 @@ def f(x0, *args):
     lambda_list = args[3]
     K = len(A_list)
     for k in range(K):
-#        ret = ret + lambda_list[k] * np.power(np.linalg.norm(A_list[k] * x0 - b_list[k], ord=p_list[k]), p_list[k])
-#        print A_list[k].shape
-#        print x0.shape
-#        print b_list[k].shape
+        # ret = ret + lambda_list[k] * np.power(np.linalg.norm(A_list[k] * x0 - b_list[k], ord=p_list[k]), p_list[k])
+        # print A_list[k].shape
+        # print x0.shape
+        # print b_list[k].shape
         x = np.reshape(x0,(len(x0),1))
         x = np.matrix(x,copy=False)
         ret = ret + lambda_list[k] * np.power(np.linalg.norm(A_list[k] * x - b_list[k], ord=p_list[k]), p_list[k])
     return ret
 
+
 def func01():
     np.random.seed(5)
-    m = 5
-    n = 10
+    m = 3
+    n = 5
     A = np.random.rand(m, n)
     x_gt = 3.0 * np.random.randn(n)
     inds = np.arange(n)
@@ -104,15 +108,13 @@ def func01():
     x1, ite1 = solve(A_list=A_list, b_list=b_list, lambda_list=lambda_list, p_list=p_list)
     print(x1, ite1)
 
-    import scipy.optimize
-    x_init = np.random.rand(n, 1)
-    data = (A_list, b_list, p_list, lambda_list,)
-    ret = scipy.optimize.minimize(f, x_init, args=data, method='BFGS',
-                                  options={'disp': False, 'maxiter': 10000, 'gtol': 1.0e-8, 'norm': 2})
-    x2 = ret.x
-    print(x2)
-
-
+    # import scipy.optimize
+    # x_init = np.random.rand(n, 1)
+    # data = (A_list, b_list, p_list, lambda_list,)
+    # ret = scipy.optimize.minimize(f, x_init, args=data, method='BFGS',
+    #                               options={'disp': False, 'maxiter': 10000, 'gtol': 1.0e-8, 'norm': 2})
+    # x2 = ret.x
+    # print(x2)
 
 if __name__=='__main__':
     func01()
