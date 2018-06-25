@@ -16,7 +16,7 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
     :return: x \in \mathbb{R}^n
     """
 
-    alpha = 1.0e-8   # small value for regularizing the weighted least squares
+    alpha = 0 #1.0e-8   # small value for regularizing the weighted least squares
     eps = 1.0e-8    # small value for avoiding zero-division in weight update
 
     if A_list is None or b_list is None or lambda_list is None or p_list is None:
@@ -58,7 +58,7 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
 
         # stopping criteria
         if np.linalg.norm(x - x_old) < tol:
-            return x, ite
+            return x.ravel(), ite
         else:
             x_old = x
 
@@ -68,7 +68,7 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
                np.asarray(1.0 / np.maximum(np.power(np.fabs(e_list[k]), 2.0 - p_list[k]), eps))[:, 0])
 
     warnings.warn("Exceeded the maximum number of iterations")
-    return x, ite
+    return x.ravel(), ite
 
 
 def f(x0, *args):
@@ -115,6 +115,7 @@ def func01():
     #                               options={'disp': False, 'maxiter': 10000, 'gtol': 1.0e-8, 'norm': 2})
     # x2 = ret.x
     # print(x2)
+
 
 if __name__=='__main__':
     func01()

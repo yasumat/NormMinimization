@@ -1,30 +1,51 @@
 import numpy as np
-from normapprox import solve
 import matplotlib.pyplot as plt
-
+import normapprox as na
 
 '''
 Example of polynomial fitting with different regularizers using Norm Approximation
-   y = w_0 + w_1 * x + w_2 * x^2 + ... + w_d * x^d
+   y = w_1 * x^d + w_2 * x^(d-1) ... + w_d * x + w_{d+1}
 '''
 
-if __name__=='__main__':
-    d = 10    # degree of polynomial
-    n = 5    # number of points
+def true_fun(X):
+    return np.cos(1.5 * np.pi * X)
 
-    np.random.seed(1)
-    x = np.random.rand(n)
-    y = np.random.rand(n)
-    plt.plot(x, y, '*')
+
+if __name__=='__main__':
+    degree = 15    # degree of polynomial
+    n_samples = 30    # number of points
+
+    np.random.seed(0)
+    x = np.sort(np.random.rand(n_samples))
+    y = true_fun(x) + np.random.randn(n_samples) * 0.1
+
+    A = np.ones((n_samples, degree+1))
+    b = y
+    for r in range(n_samples):
+        for c in range(0, degree):
+            A[r, c] = np.power(x[r], degree-c)
+
+    # least-squares fitting
+    w1, ite = na.solve(A_list=[A], b_list=[b], lambda_list=[1000], p_list=[2])
+    # least-squares fitting with regularization
+    w2, ite = na.solve(A_list=[A, np.identity(degree+1)], b_list=[b, np.zeros(degree+1)],
+                       lambda_list=[1000, 1], p_list=[2, 2])
+    # L1 fitting
+    w3, ite = na.solve(A_list=[A], b_list=[b], lambda_list=[1000], p_list=[1])
+
+    f1 = np.poly1d(w1)
+    f2 = np.poly1d(w2)
+    f3 = np.poly1d(w3)
+    xp = np.linspace(0, 1, 100)
+    plt.plot(x, true_fun(x), 'k-.', label='True function')
+    plt.plot(xp, f1(xp), 'g-', label='L2')
+    plt.plot(xp, f2(xp), 'r-', label='L2 with regularization')
+    plt.plot(xp, f3(xp), 'b-', label='L1')
+    plt.scatter(x, y, edgecolor='b', label='data')
+    plt.legend()
     plt.xlabel('x')
     plt.ylabel('y')
+    plt.xlim((0, 1))
+    plt.ylim((-2, 2))
     plt.show()
-
-    A = np.ones((n, d+1))
-    b = np.zeros(())
-    for r in range(n):
-        for c in range(1, d+1):
-            A[r, c] = np.power(x[r], c)
-
-
 
