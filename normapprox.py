@@ -84,7 +84,7 @@ def f(x0, *args):
         # print x0.shape
         # print b_list[k].shape
         x = np.reshape(x0,(len(x0),1))
-        x = np.matrix(x,copy=False)
+        x = np.matrix(x, copy=False)
         ret = ret + lambda_list[k] * np.power(np.linalg.norm(A_list[k] * x - b_list[k], ord=p_list[k]), p_list[k])
     return ret
 
