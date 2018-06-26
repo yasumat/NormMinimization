@@ -7,6 +7,7 @@ Example of polynomial fitting with different regularizers using Norm Approximati
    y = w_1 * x^d + w_2 * x^(d-1) ... + w_d * x + w_{d+1}
 '''
 
+
 def true_fun(X):
     return np.cos(1.5 * np.pi * X)
 
@@ -26,22 +27,25 @@ if __name__=='__main__':
             A[r, c] = np.power(x[r], degree-c)
 
     # least-squares fitting
-    w1, ite = na.solve(A_list=[A], b_list=[b], lambda_list=[1000], p_list=[2])
+    w1, residue1, ite1 = na.solve(A_list=[A], b_list=[b], lambda_list=[1e-1], p_list=[2])
     # least-squares fitting with regularization
-    w2, ite = na.solve(A_list=[A, np.identity(degree+1)], b_list=[b, np.zeros(degree+1)],
-                       lambda_list=[1000, 1], p_list=[2, 2])
+    w2, residue2, ite2 = na.solve(A_list=[A, np.identity(degree+1)], b_list=[b, np.zeros(degree+1)],
+                                  lambda_list=[1000, 1], p_list=[2, 2])
     # L1 fitting
-    w3, ite = na.solve(A_list=[A], b_list=[b], lambda_list=[1000], p_list=[1])
+    w3, residue3, ite3 = na.solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[1])
+
+    print(residue1)
+    print('iterations:', ite1, ite2, ite3)
 
     f1 = np.poly1d(w1)
     f2 = np.poly1d(w2)
     f3 = np.poly1d(w3)
     xp = np.linspace(0, 1, 100)
+    plt.scatter(x, y, edgecolor='b', label='data')
     plt.plot(x, true_fun(x), 'k-.', label='True function')
     plt.plot(xp, f1(xp), 'g-', label='L2')
     plt.plot(xp, f2(xp), 'r-', label='L2 with regularization')
     plt.plot(xp, f3(xp), 'b-', label='L1')
-    plt.scatter(x, y, edgecolor='b', label='data')
     plt.legend()
     plt.xlabel('x')
     plt.ylabel('y')

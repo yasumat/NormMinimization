@@ -2,6 +2,13 @@ import numpy as np
 import warnings
 
 
+def residue_norm(e_list=None):
+    residue = 0.0
+    for e in e_list:
+        residue = residue + np.linalg.norm(e)
+    return residue
+
+
 def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=10000, tol=1.0e-8):
     """
     Solves a general norm approximation problem
@@ -50,25 +57,22 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
         for k in range(K):
             C = C + p_list[k] * lambda_list[k] * np.dot(np.dot(A_list[k].T, w_list[k]), A_list[k])
             d = d + p_list[k] * lambda_list[k] * np.dot(np.dot(A_list[k].T, w_list[k]), b_list[k])
-
         x = np.linalg.solve(C, d)
-
         for k in range(K):
             e_list[k] = b_list[k] - A_list[k].dot(x)
-
         # stopping criteria
         if np.linalg.norm(x - x_old) < tol:
-            return x.ravel(), ite
+            return x.ravel(), residue_norm(e_list), ite
         else:
+            print(x[0], x[1])
             x_old = x
-
         # update weights
         for k in range(K):
             w_list[k] = np.diag(
                np.asarray(1.0 / np.maximum(np.power(np.fabs(e_list[k]), 2.0 - p_list[k]), eps))[:, 0])
 
     warnings.warn("Exceeded the maximum number of iterations")
-    return x.ravel(), ite
+    return x.ravel(), residue_norm(e_list), ite
 
 
 def f(x0, *args):
@@ -105,8 +109,8 @@ def func01():
     p_list = [2, 1]
     lambda_list = [1.0, 1.0]
 
-    x1, ite1 = solve(A_list=A_list, b_list=b_list, lambda_list=lambda_list, p_list=p_list)
-    print(x1, ite1)
+    x1, residue, ite1 = solve(A_list=A_list, b_list=b_list, lambda_list=lambda_list, p_list=p_list)
+    print(x1, residue, ite1)
 
     # import scipy.optimize
     # x_init = np.random.rand(n, 1)
