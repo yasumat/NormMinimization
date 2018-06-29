@@ -83,12 +83,13 @@ Here parameters to estimate are coefficients
 This problem can be written in a matrix form by a proper matrix 
 <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7BA%7D"/> and a vector
 <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7Bb%7D"/>, as 
-<img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7BA%7D%20%5Cmathbf%7Bw%7D%20%5Capprox%20%5Cmathbf%7Bb%7D"/>.
+<img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7BA%7D%20%5Cmathbf%7Bw%7D%20%5Capprox%20%5Cmathbf%7Bb%7D"/> 
+(See ``ex01.py`` for how <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7BA%7D"/> 
+and <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7Bb%7D"/> are formed).
 The goal is to estimate a *good* <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7Bw%7D"/> that best approximates the equality.
 For example, with an L2 metric, this can be formulated as:
 
 Conventional least-squares regression (Case 1): 
-    
 <img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bw%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bw%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20"/>
 
 <BR>
@@ -103,6 +104,7 @@ where
 <img src="http://latex.codecogs.com/gif.latex?%5Clambda_2%20%3D%201.0%5Cmathrm%7Be%7D%5E%7B-4%7D"/> in this particular example.
 
 <BR>
+
 These problems Case 1 and Case 2 can be solved by the following code:
 
 
@@ -115,6 +117,8 @@ These problems Case 1 and Case 2 can be solved by the following code:
                                   lambda_list=[1, 1e-4], p_list=[2, 2])
 
 
+Below shows the result of Case 1 and Case 2 fittings. With a regularizer (Case 2), it can be seen that the issue of
+over-fitting is alleviated.
 <img src="./ex01.png"/> 
  
 ### Conditions of use
