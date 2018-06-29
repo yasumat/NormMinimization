@@ -29,7 +29,7 @@ an unconstrained form of Lasso (least absolute shrinkage and selection operator)
 <img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bx%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bx%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Clambda%20%5C%7C%5Cmathbf%7Bx%7D%5C%7C_1"/>
 
 which corresponds to the case where
-<img src="http://latex.codecogs.com/gif.latex?k%3D2"/> and
+<img src="http://latex.codecogs.com/gif.latex?K%3D2"/> and
 <img src="http://latex.codecogs.com/gif.latex?%5Cleft%28%5Cmathbf%7BA%7D_1%2C%20%5Cmathbf%7BA%7D_2%2C%20%5Cmathbf%7Bb%7D_1%2C%20%5Cmathbf%7Bb%7D_2%2C%20%5Clambda_1%2C%20%5Clambda_2%2C%20p_1%2C%20p_2%20%5Cright%29%3D%5Cleft%28%5Cmathbf%7BA%7D%2C%20%5Cmathbf%7BI%7D%2C%20%5Cmathbf%7Bb%7D%2C%20%5Cmathbf%7B0%7D%2C%201%2C%20%5Clambda%2C%202%2C%201%5Cright%29"/>
  in the general form described above.
  
@@ -39,7 +39,7 @@ and image deblurring can be written as
 <img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5C%7C%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Clambda%20%5C%7C%5Cmathbf%7B%5CGamma%7D%20%5Cmathbf%7Bx%7D%20%5C%7C_2%5E2"/>.
  
 This case corresponds to the case where
-<img src="http://latex.codecogs.com/gif.latex?k%3D2"/> and 
+<img src="http://latex.codecogs.com/gif.latex?K%3D2"/> and 
 <img src="http://latex.codecogs.com/png.latex?%5Cleft%28%5Cmathbf%7BA%7D_1%2C%20%5Cmathbf%7BA%7D_2%2C%20%5Cmathbf%7Bb%7D_1%2C%20%5Cmathbf%7Bb%7D_2%2C%20%5Clambda_1%2C%20%5Clambda_2%2C%20p_1%2C%20p_2%20%5Cright%20%29%3D%5Cleft%28%5Cmathbf%7BA%7D%2C%20%5Cmathbf%7B%5CGamma%7D%2C%20%5Cmathbf%7Bb%7D%2C%20%5Cmathbf%7B0%7D%2C%201%2C%20%5Clambda%2C%202%2C%202%20%5Cright%20%29"/>.
  
 These objective functions can be further augmented by additional 
@@ -48,7 +48,7 @@ For example, elastic net is defined as
  
 <img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5C%7C%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Calpha%20%5C%7C%20%5Cmathbf%7Bx%7D%20%5C%7C_1%20&plus;%20%5Cbeta%20%5C%7C%5Cmathbf%7Bx%7D%5C%7C_2%5E2"/>
  
-which corresponds to  <img src="http://latex.codecogs.com/gif.latex?k%3D3"/> and 
+which corresponds to  <img src="http://latex.codecogs.com/gif.latex?K%3D3"/> and 
 <img src="http://latex.codecogs.com/png.latex?%5Cleft%28%5Cmathbf%7BA%7D_1%2C%20%5Cmathbf%7BA%7D_2%2C%20%5Cmathbf%7BA%7D_3%2C%20%5Cmathbf%7Bb%7D_1%2C%20%5Cmathbf%7Bb%7D_2%2C%20%5Cmathbf%7Bb%7D_3%2C%20%5Clambda_1%2C%20%5Clambda_2%2C%20%5Clambda_3%2C%20p_1%2C%20p_2%2C%20p_3%20%5Cright%20%29%3D%5Cleft%28%5Cmathbf%7BA%7D%2C%20%5Cmathbf%7BI%7D%2C%20%5Cmathbf%7BI%7D%2C%20%5Cmathbf%7Bb%7D%2C%20%5Cmathbf%7B0%7D%2C%20%5Cmathbf%7B0%7D%2C%201%2C%20%5Calpha%2C%20%5Cbeta%2C%202%2C%201%2C%202%20%5Cright%20%29"/>.
 
 This implementation can take arbitrary numbers of norm terms, each of them is linear but can have different norm, constraint matrix, and vector. 
@@ -59,10 +59,10 @@ Call a function ``solve`` defined in ``normmin.py`` by appropriately forming mat
 vectors <img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Cmathbf%7Bb%7D_k%5C%7D"/> as well as 
 lists of weights <img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Clambda_k%5C%7D"/>
 and norm specifiers <img src="http://latex.codecogs.com/gif.latex?%5C%7Bp_k%5C%7D"/> in the form of python lists, and 
-pass them to ``A_list``, ``b_list``, ``lambda_list``, and ``p_list``, respectively. 
+pass them to ``A_list``, ``b_list``, ``lambda_list``, and ``p_list`` arguments, respectively, of ``solve`` function. 
 
 ```
-def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=10000, tol=1.0e-8):
+solve(A_list=[A_1, ..., A_K], b_list=[b_1, ..., b_K], lambda_list=[lambda_1, ..., lambda_K], p_list=[p_1, ..., p_K])
 ```
 
 See examples for more.

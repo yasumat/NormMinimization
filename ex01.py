@@ -14,7 +14,7 @@ def true_fun(x):
 
 if __name__=='__main__':
     degree = 15    # degree of polynomial
-    n_samples = 30    # number of points
+    n_samples = 30    # number of data points
 
     # matrix dimensions (m x n matrix)
     m = n_samples
