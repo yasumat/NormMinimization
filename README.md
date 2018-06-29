@@ -58,15 +58,40 @@ Call a function ``solve`` defined in ``normapprox.py`` by appropriately forming 
 <img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Cmathbf%7BA%7D_k%5C%7D"/> and 
 vectors <img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Cmathbf%7Bb%7D_k%5C%7D"/> as well as 
 lists of weights <img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Clambda_k%5C%7D"/>
-and norm specifiers <img src="http://latex.codecogs.com/gif.latex?%5C%7Bp_k%5C%7D"/> in the form of python lists.
+and norm specifiers <img src="http://latex.codecogs.com/gif.latex?%5C%7Bp_k%5C%7D"/> in the form of python lists, and 
+pass them to ``A_list``, ``b_list``, ``lambda_list``, and ``p_list``, respectively. 
 
 ```
 def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=10000, tol=1.0e-8):
 ```
 
+See examples for more.
+
 ### Examples
 
+Here we show a few examples for using this implementation.
+
 #### Regression with regularization - ex01.py
+
+Over-fitting is a common issue in machine learning. A conventional approach to avoiding this issue is to *regularize* the 
+esimates by some additional constraints. This example penalizes the estimates that have high values using a *regularizer*.
+
+Conventional least-squares regression (Case 1): 
+<img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bx%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bx%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20"/>
+
+Least-squares regression with a regularizer (Case 2):
+<img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bx%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bx%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Clambda_2%20%5C%7C%5Cmathbf%7Bx%7D%5C%7C_2^2"/>,
+<img src="http://latex.codecogs.com/gif.latex?%5Clambda_2%20%3D%201.0%5Cmathrm%7Be%7D%5E%7B-4%7D"/>
+
+
+    import normapprox as na
+    ...
+    # Case 1: Conventional least-squares fitting
+    w1, residue1, ite1 = na.solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[2])
+    # Case 2: Least-squares fitting with L2 regularization (special form of Ridge regression)
+    w2, residue2, ite2 = na.solve(A_list=[A, np.identity(degree+1)], b_list=[b, np.zeros(degree+1)],
+                                  lambda_list=[1, 1e-4], p_list=[2, 2])
+
 
 <img src="./ex01.png"/> 
  
@@ -82,7 +107,12 @@ contact address below. If you use this code for a publication, please cite the f
 	  	booktitle={Proceedings of Asian Conference on Computer Vision Workshops (ACCVW)},
 	  	year={2016}
 	}
- 
+
+### Dependencies
+The code is written in Python 3.6 but should be able to adapt it to Python 2.x if needed.
+You might need the following Python packages installed:
+* `numpy` (main computation depends on matrix operations)
+* `matplotlib` (for running example codes, but not used in the main computation code)
 ### Acknowledgements
 
 

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import normapprox as na
 
 '''
-Example of polynomial fitting with different regularizers using Norm Approximation
+Example of polynomial fitting with a regularizer using Norm Approximation
    y = w_1 * x^d + w_2 * x^(d-1) ... + w_d * x + w_{d+1}
 '''
 
@@ -26,11 +26,11 @@ if __name__=='__main__':
         for c in range(0, degree):
             A[r, c] = np.power(x[r], degree-c)
 
-    # least-squares fitting
-    w1, residue1, ite1 = na.solve(A_list=[A], b_list=[b], lambda_list=[1e-1], p_list=[2])
-    # least-squares fitting with regularization
+    # Case 1: Conventional least-squares fitting
+    w1, residue1, ite1 = na.solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[2])
+    # Case 2: Least-squares fitting with L2 regularization (special form of Ridge regression)
     w2, residue2, ite2 = na.solve(A_list=[A, np.identity(degree+1)], b_list=[b, np.zeros(degree+1)],
-                                  lambda_list=[1000, 1], p_list=[2, 2])
+                                  lambda_list=[1, 1e-4], p_list=[2, 2])
     plt.style.use('fivethirtyeight')
     f1 = np.poly1d(w1)
     f2 = np.poly1d(w2)
