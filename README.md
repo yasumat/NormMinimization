@@ -42,7 +42,7 @@ that appears in image restoration, super-resolution, and image deblurring. This 
 <img src="http://latex.codecogs.com/png.latex?%5Cleft%28%5Cmathbf%7BA%7D_1%2C%20%5Cmathbf%7BA%7D_2%2C%20%5Cmathbf%7Bb%7D_1%2C%20%5Cmathbf%7Bb%7D_2%2C%20%5Clambda_1%2C%20%5Clambda_2%2C%20p_1%2C%20p_2%20%5Cright%20%29%3D%5Cleft%28%5Cmathbf%7BA%7D%2C%20%5Cmathbf%7B%5CGamma%7D%2C%20%5Cmathbf%7Bb%7D%2C%20%5Cmathbf%7B0%7D%2C%201%2C%20%5Clambda%2C%202%2C%202%20%5Cright%20%29"/>.
  
 These objective functions can be further augmented by additional 
-<img src=""http://latex.codecogs.com/gif.latex?%5Cell_%7Bp_k%7D""/>-norm terms that represent constraints.
+<img src="http://latex.codecogs.com/gif.latex?%5Cell_%7Bp_k%7D"/>-norm terms that represent constraints.
 For example, elastic net is defined as
  
 <img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5C%7C%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Calpha%20%5C%7C%20%5Cmathbf%7Bx%7D%20%5C%7C_1%20&plus;%20%5Cbeta%20%5C%7C%5Cmathbf%7Bx%7D%5C%7C_2%5E2"/>
@@ -55,6 +55,9 @@ which corresponds to  <img src="http://latex.codecogs.com/gif.latex?k%3D3"/> and
 
 ### Examples
 
+#### Regression with regularization - ex01.py
+
+<img src="./ex01.png"/> 
  
 ### Conditions of use
 

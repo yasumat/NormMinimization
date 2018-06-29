@@ -18,7 +18,7 @@ if __name__=='__main__':
 
     np.random.seed(0)
     x = np.sort(np.random.rand(n_samples))
-    y = true_fun(x) + np.random.randn(n_samples) * 0.1
+    y = true_fun(x) + np.random.randn(n_samples) * 0.15
 
     A = np.ones((n_samples, degree+1))
     b = y
@@ -31,21 +31,14 @@ if __name__=='__main__':
     # least-squares fitting with regularization
     w2, residue2, ite2 = na.solve(A_list=[A, np.identity(degree+1)], b_list=[b, np.zeros(degree+1)],
                                   lambda_list=[1000, 1], p_list=[2, 2])
-    # L1 fitting
-    w3, residue3, ite3 = na.solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[1])
-
-    print(residue1)
-    print('iterations:', ite1, ite2, ite3)
-
+    plt.style.use('fivethirtyeight')
     f1 = np.poly1d(w1)
     f2 = np.poly1d(w2)
-    f3 = np.poly1d(w3)
     xp = np.linspace(0, 1, 100)
     plt.scatter(x, y, edgecolor='b', label='data')
     plt.plot(x, true_fun(x), 'k-.', label='True function')
     plt.plot(xp, f1(xp), 'g-', label='L2')
     plt.plot(xp, f2(xp), 'r-', label='L2 with regularization')
-    plt.plot(xp, f3(xp), 'b-', label='L1')
     plt.legend()
     plt.xlabel('x')
     plt.ylabel('y')
