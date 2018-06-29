@@ -69,21 +69,41 @@ See examples for more.
 
 ### Examples
 
-Here we show a few examples for using this implementation.
+Here we show a few examples for using this implementation. # More to come...
 
-#### Regression with regularization - ex01.py
+#### Polynomial fitting with regularization - ex01.py
 
-Over-fitting is a common issue in machine learning. A conventional approach to avoiding this issue is to *regularize* the 
-esimates by some additional constraints. This example penalizes the estimates that have high values using a *regularizer*.
+We take an example of polynomial fitting. Suppose we have data points in the x-y plane and wish to fit 
+a polynomial function of degree <img src="http://latex.codecogs.com/gif.latex?d"/> to the data points:
+
+<img src="http://latex.codecogs.com/gif.latex?y%20%3D%20w_1%20x%5Ed%20&plus;%20w_2%20x%5E%7Bd-1%7D%20&plus;%20...%20&plus;%20w_d%20x%20&plus;%20x_%7Bd&plus;1%7D"/>
+
+Here parameters to estimate are coefficients 
+<img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7Bw%7D%20%3D%20%5C%7Bw_1%2C%20...%2C%20w_%7Bd&plus;1%7D%5C%7D"/>.
+This problem can be written in a matrix form by a proper matrix 
+<img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7BA%7D"/> and a vector
+<img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7Bb%7D"/>, as 
+<img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7BA%7D%20%5Cmathbf%7Bw%7D%20%5Capprox%20%5Cmathbf%7Bb%7D"/>.
+The goal is to estimate a *good* <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7Bw%7D"/> that best approximates the equality.
+For example, with an L2 metric, this can be formulated as:
 
 Conventional least-squares regression (Case 1): 
-<img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bx%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bx%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20"/>
+    
+<img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bw%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bw%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20"/>
+
+<BR>
+ 
+Over-fitting is a common issue in this type of problems when a proper polynomial degree is unkonwn. 
+A conventional approach to avoiding this issue is to *regularize* the esimates by some additional constraints. 
+This example penalizes the estimates that have high values using a *regularizer*:
 
 Least-squares regression with a regularizer (Case 2):
-<img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bx%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bx%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Clambda_2%20%5C%7C%5Cmathbf%7Bx%7D%5C%7C_2^2"/>,
+<img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bw%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bw%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Clambda_2%20%5C%7C%5Cmathbf%7Bw%7D%5C%7C_2^2"/>,
 where 
 <img src="http://latex.codecogs.com/gif.latex?%5Clambda_2%20%3D%201.0%5Cmathrm%7Be%7D%5E%7B-4%7D"/> in this particular example.
-These are solved by the following code:
+
+<BR>
+These problems Case 1 and Case 2 can be solved by the following code:
 
 
     import normapprox as na
@@ -91,7 +111,7 @@ These are solved by the following code:
     # Case 1: Conventional least-squares fitting
     w1, residue1, ite1 = na.solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[2])
     # Case 2: Least-squares fitting with L2 regularization (special form of Ridge regression)
-    w2, residue2, ite2 = na.solve(A_list=[A, np.identity(degree+1)], b_list=[b, np.zeros(degree+1)],
+    w2, residue2, ite2 = na.solve(A_list=[A, np.identity(n)], b_list=[b, np.zeros(n)],
                                   lambda_list=[1, 1e-4], p_list=[2, 2])
 
 
@@ -115,9 +135,6 @@ The code is written in Python 3.6 but should be able to adapt it to Python 2.x i
 You might need the following Python packages installed:
 * `numpy` (main computation depends on matrix operations)
 * `matplotlib` (for running example codes, but not used in the main computation code)
-### Acknowledgements
-
-
 
 
 ### Contact information
