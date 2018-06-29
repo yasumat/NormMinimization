@@ -52,6 +52,22 @@ which corresponds to  <img src="http://latex.codecogs.com/gif.latex?k%3D3"/> and
  
 ### How to use?
 
+Call a function ``solve`` defined in ``normapprox.py``.
+```
+def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=10000, tol=1.0e-8):
+    """
+    Solves a general norm approximation problem
+        minimize_x \sum_i \lambda_i * ||A_i x - b_i||_{p_i}^{p_i}
+
+    :param A_list: List of matrices A_k \in \mathbb{R}^{m_k \times n}
+    :param b_list: List of vectors b_k \in \mathbb{R}^{m_k}
+    :param lambda_list: List of weighting scalar \lambda_k \in \mathbb{R}
+    :param p_list: List of norm indicators p_k \ in \mathbb{R}
+    :param max_iter: Maximum number of iterations
+    :param tol: Tolerance
+    :return: x \in \mathbb{R}^n
+    """
+```
 
 ### Examples
 
