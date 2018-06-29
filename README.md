@@ -67,11 +67,7 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
 
 See examples for more.
 
-### Examples
-
-Here we show a few examples for using this implementation. # More to come...
-
-#### Polynomial fitting with regularization - ex01.py
+### Example 1: Polynomial fitting with regularization - ex01.py
 
 We take an example of polynomial fitting. Suppose we have data points in the x-y plane and wish to fit 
 a polynomial function of degree <img src="http://latex.codecogs.com/gif.latex?d"/> to the data points:
@@ -119,6 +115,7 @@ These problems Case 1 and Case 2 can be solved by the following code:
 
 Below shows the result of Case 1 and Case 2 fittings. With a regularizer (Case 2), it can be seen that the issue of
 over-fitting is alleviated.
+
 <img src="./ex01.png"/> 
  
 ### Conditions of use
