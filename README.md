@@ -132,10 +132,10 @@ contact address below. If you use this code for a publication, please cite the f
 	}
 
 ### Dependencies
-The code is written in Python 3.6 but should be able to adapt it to Python 2.x if needed.
+The code is written in Python 3.6 but should be able to run with Python 2.x if needed.
 You might need the following Python packages installed:
 * `numpy` (main computation depends on matrix operations)
-* `matplotlib` (for running example codes, but not used in the main computation code)
+* `matplotlib` (for running example code, but not used in the main computation code)
 
 
 ### Contact information
