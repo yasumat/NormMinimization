@@ -7,7 +7,7 @@ written by Yasuyuki Matsushita (yasumat@ist.osaka-u.ac.jp) at Osaka University.
 In various scientific computing tasks, there arises a need for minimizing some vector norm, 
 or a combination of different vector norms. A generalized norm approximation problem can be written as
 
-<img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5Csum_%7Bk%3D1%7D%5EK%20%5Clambda_k%20%5C%7C%5Cmathbf%7BA%7D_k%20%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D_k%20%5C%7C_%7Bp_k%7D%5E%7Bp_k%7D"/> - *
+<img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5Csum_%7Bk%3D1%7D%5EK%20%5Clambda_k%20%5C%7C%5Cmathbf%7BA%7D_k%20%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D_k%20%5C%7C_%7Bp_k%7D%5E%7Bp_k%7D"/>
 
 where <img src="http://latex.codecogs.com/png.latex?k%3D%5C%7B1%2C%20%5Cldots%2C%20K%5C%7D"> is the term index, 
 <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7BA%7D_k%20%5Cin%20%5Cmathbb%7BR%7D%5E%7Bm_k%20%5Ctimes%20n%7D"/>
@@ -54,21 +54,14 @@ which corresponds to  <img src="http://latex.codecogs.com/gif.latex?k%3D3"/> and
 This implementation can take arbitrary numbers of norm terms, each of them is linear but can have different norm, constraint matrix, and vector. 
 ### How to use?
 
-Call a function ``solve`` defined in ``normapprox.py``.
+Call a function ``solve`` defined in ``normapprox.py`` by appropriately forming matrices 
+<img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Cmathbf%7BA%7D_k%5C%7D"/> and 
+vectors <img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Cmathbf%7Bb%7D_k%5C%7D"/> as well as 
+lists of weights <img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Clambda_k%5C%7D"/>
+and norm specifiers <img src="http://latex.codecogs.com/gif.latex?%5C%7Bp_k%5C%7D"/> in the form of python lists.
+
 ```
 def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=10000, tol=1.0e-8):
-    """
-    Solves a general norm approximation problem
-        minimize_x \sum_i \lambda_i * ||A_i x - b_i||_{p_i}^{p_i}
-
-    :param A_list: List of matrices A_k \in \mathbb{R}^{m_k \times n}
-    :param b_list: List of vectors b_k \in \mathbb{R}^{m_k}
-    :param lambda_list: List of weighting scalar \lambda_k \in \mathbb{R}
-    :param p_list: List of norm indicators p_k \ in \mathbb{R}
-    :param max_iter: Maximum number of iterations
-    :param tol: Tolerance
-    :return: x \in \mathbb{R}^n
-    """
 ```
 
 ### Examples

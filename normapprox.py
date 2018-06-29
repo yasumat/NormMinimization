@@ -12,7 +12,7 @@ def residue_norm(e_list=None):
 def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=10000, tol=1.0e-8):
     """
     Solves a general norm approximation problem
-        minimize_x \sum_i \lambda_i * ||A_i x - b_i||_{p_i}^{p_i}
+        minimize_x \sum_k \lambda_k * ||A_k x - b_k||_{p_k}^{p_k}
 
     :param A_list: List of matrices A_k \in \mathbb{R}^{m_k \times n}
     :param b_list: List of vectors b_k \in \mathbb{R}^{m_k}
@@ -21,9 +21,11 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
     :param max_iter: Maximum number of iterations
     :param tol: Tolerance
     :return: x \in \mathbb{R}^n
+    :return: residue norm
+    :return: number of iterations spent for computation
     """
 
-    alpha = 0 #1.0e-8   # small value for regularizing the weighted least squares
+    alpha = 0    #1.0e-8   # small value for regularizing the weighted least squares
     eps = 1.0e-8    # small value for avoiding zero-division in weight update
 
     if A_list is None or b_list is None or lambda_list is None or p_list is None:
@@ -73,54 +75,3 @@ def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=1000
 
     warnings.warn("Exceeded the maximum number of iterations")
     return x.ravel(), residue_norm(e_list), ite
-
-
-def f(x0, *args):
-    ret = 0
-    A_list = args[0]
-    b_list = args[1]
-    p_list = args[2]
-    lambda_list = args[3]
-    K = len(A_list)
-    for k in range(K):
-        # ret = ret + lambda_list[k] * np.power(np.linalg.norm(A_list[k] * x0 - b_list[k], ord=p_list[k]), p_list[k])
-        # print A_list[k].shape
-        # print x0.shape
-        # print b_list[k].shape
-        x = np.reshape(x0,(len(x0),1))
-        x = np.matrix(x, copy=False)
-        ret = ret + lambda_list[k] * np.power(np.linalg.norm(A_list[k] * x - b_list[k], ord=p_list[k]), p_list[k])
-    return ret
-
-
-def func01():
-    np.random.seed(5)
-    m = 3
-    n = 5
-    A = np.random.rand(m, n)
-    x_gt = 3.0 * np.random.randn(n)
-    inds = np.arange(n)
-    np.random.shuffle(inds)
-    x_gt[inds[2:]] = 0
-    b = np.dot(A, x_gt)
-    b = np.reshape(b, (m, 1))
-    A_list = [A, np.identity(n)]
-    b_list = [b, np.zeros((n, 1))]
-    p_list = [2, 1]
-    lambda_list = [1.0, 1.0]
-
-    x1, residue, ite1 = solve(A_list=A_list, b_list=b_list, lambda_list=lambda_list, p_list=p_list)
-    print(x1, residue, ite1)
-
-    # import scipy.optimize
-    # x_init = np.random.rand(n, 1)
-    # data = (A_list, b_list, p_list, lambda_list,)
-    # ret = scipy.optimize.minimize(f, x_init, args=data, method='BFGS',
-    #                               options={'disp': False, 'maxiter': 10000, 'gtol': 1.0e-8, 'norm': 2})
-    # x2 = ret.x
-    # print(x2)
-
-
-if __name__=='__main__':
-    func01()
-
