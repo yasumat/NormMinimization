@@ -7,7 +7,7 @@ written by Yasuyuki Matsushita (yasumat@ist.osaka-u.ac.jp) at Osaka University.
 In various scientific computing tasks, there arises a need for minimizing some vector norm, 
 or a combination of different vector norms. A generalized norm approximation problem can be written as
 
-<img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5Csum_%7Bk%3D1%7D%5EK%20%5Clambda_k%20%5C%7C%5Cmathbf%7BA%7D_k%20%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D_k%20%5C%7C_%7Bp_k%7D%5E%7Bp_k%7D"/>
+<img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5Csum_%7Bk%3D1%7D%5EK%20%5Clambda_k%20%5C%7C%5Cmathbf%7BA%7D_k%20%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D_k%20%5C%7C_%7Bp_k%7D%5E%7Bp_k%7D"/> - *
 
 where <img src="http://latex.codecogs.com/png.latex?k%3D%5C%7B1%2C%20%5Cldots%2C%20K%5C%7D"> is the term index, 
 <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7BA%7D_k%20%5Cin%20%5Cmathbb%7BR%7D%5E%7Bm_k%20%5Ctimes%20n%7D"/>
@@ -33,11 +33,12 @@ which corresponds to the case where
 <img src="http://latex.codecogs.com/gif.latex?%5Cleft%28%5Cmathbf%7BA%7D_1%2C%20%5Cmathbf%7BA%7D_2%2C%20%5Cmathbf%7Bb%7D_1%2C%20%5Cmathbf%7Bb%7D_2%2C%20%5Clambda_1%2C%20%5Clambda_2%2C%20p_1%2C%20p_2%20%5Cright%29%3D%5Cleft%28%5Cmathbf%7BA%7D%2C%20%5Cmathbf%7BI%7D%2C%20%5Cmathbf%7Bb%7D%2C%20%5Cmathbf%7B0%7D%2C%201%2C%20%5Clambda%2C%202%2C%201%5Cright%29"/>
  in the general form described above.
  
-As another example, Tikhonov regularization or ridge regression 
+As another example, Tikhonov regularization or ridge regression that appears in image restoration, super-resolution, 
+and image deblurring can be written as
  
-<img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5C%7C%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Clambda%20%5C%7C%5Cmathbf%7B%5CGamma%7D%20%5Cmathbf%7Bx%7D%20%5C%7C_2%5E2"/>
+<img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5C%7C%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Clambda%20%5C%7C%5Cmathbf%7B%5CGamma%7D%20%5Cmathbf%7Bx%7D%20%5C%7C_2%5E2"/>.
  
-that appears in image restoration, super-resolution, and image deblurring. This case corresponds to the case where
+This case corresponds to the case where
 <img src="http://latex.codecogs.com/gif.latex?k%3D2"/> and 
 <img src="http://latex.codecogs.com/png.latex?%5Cleft%28%5Cmathbf%7BA%7D_1%2C%20%5Cmathbf%7BA%7D_2%2C%20%5Cmathbf%7Bb%7D_1%2C%20%5Cmathbf%7Bb%7D_2%2C%20%5Clambda_1%2C%20%5Clambda_2%2C%20p_1%2C%20p_2%20%5Cright%20%29%3D%5Cleft%28%5Cmathbf%7BA%7D%2C%20%5Cmathbf%7B%5CGamma%7D%2C%20%5Cmathbf%7Bb%7D%2C%20%5Cmathbf%7B0%7D%2C%201%2C%20%5Clambda%2C%202%2C%202%20%5Cright%20%29"/>.
  
@@ -49,7 +50,8 @@ For example, elastic net is defined as
  
 which corresponds to  <img src="http://latex.codecogs.com/gif.latex?k%3D3"/> and 
 <img src="http://latex.codecogs.com/png.latex?%5Cleft%28%5Cmathbf%7BA%7D_1%2C%20%5Cmathbf%7BA%7D_2%2C%20%5Cmathbf%7BA%7D_3%2C%20%5Cmathbf%7Bb%7D_1%2C%20%5Cmathbf%7Bb%7D_2%2C%20%5Cmathbf%7Bb%7D_3%2C%20%5Clambda_1%2C%20%5Clambda_2%2C%20%5Clambda_3%2C%20p_1%2C%20p_2%2C%20p_3%20%5Cright%20%29%3D%5Cleft%28%5Cmathbf%7BA%7D%2C%20%5Cmathbf%7BI%7D%2C%20%5Cmathbf%7BI%7D%2C%20%5Cmathbf%7Bb%7D%2C%20%5Cmathbf%7B0%7D%2C%20%5Cmathbf%7B0%7D%2C%201%2C%20%5Calpha%2C%20%5Cbeta%2C%202%2C%201%2C%202%20%5Cright%20%29"/>.
- 
+
+This implementation can take arbitrary numbers of norm terms, each of them is linear but can have different norm, constraint matrix, and vector. 
 ### How to use?
 
 Call a function ``solve`` defined in ``normapprox.py``.
