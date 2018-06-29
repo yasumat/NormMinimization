@@ -16,20 +16,26 @@ if __name__=='__main__':
     degree = 15    # degree of polynomial
     n_samples = 30    # number of points
 
+    # matrix dimensions (m x n matrix)
+    m = n_samples
+    n = degree + 1
+
+    # generate data points
     np.random.seed(0)
     x = np.sort(np.random.rand(n_samples))
     y = true_fun(x) + np.random.randn(n_samples) * 0.15
 
-    A = np.ones((n_samples, degree+1))
+    # Create a linear regression problem
+    A = np.ones((m, n))
     b = y
-    for r in range(n_samples):
-        for c in range(0, degree):
-            A[r, c] = np.power(x[r], degree-c)
+    for r in range(m):
+        for c in range(0, n-1):
+            A[r, c] = np.power(x[r], n-1-c)
 
     # Case 1: Conventional least-squares fitting
     w1, residue1, ite1 = na.solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[2])
     # Case 2: Least-squares fitting with L2 regularization (special form of Ridge regression)
-    w2, residue2, ite2 = na.solve(A_list=[A, np.identity(degree+1)], b_list=[b, np.zeros(degree+1)],
+    w2, residue2, ite2 = na.solve(A_list=[A, np.identity(n)], b_list=[b, np.zeros(n)],
                                   lambda_list=[1, 1e-4], p_list=[2, 2])
     plt.style.use('fivethirtyeight')
     f1 = np.poly1d(w1)

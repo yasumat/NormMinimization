@@ -81,7 +81,9 @@ Conventional least-squares regression (Case 1):
 
 Least-squares regression with a regularizer (Case 2):
 <img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bx%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bx%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Clambda_2%20%5C%7C%5Cmathbf%7Bx%7D%5C%7C_2^2"/>,
-<img src="http://latex.codecogs.com/gif.latex?%5Clambda_2%20%3D%201.0%5Cmathrm%7Be%7D%5E%7B-4%7D"/>
+where 
+<img src="http://latex.codecogs.com/gif.latex?%5Clambda_2%20%3D%201.0%5Cmathrm%7Be%7D%5E%7B-4%7D"/> in this particular example.
+These are solved by the following code:
 
 
     import normapprox as na
