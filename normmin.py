@@ -11,7 +11,7 @@ def residue_norm(e_list=None):
 
 def solve(A_list=None, b_list=None, lambda_list=None, p_list=None, max_iter=10000, tol=1.0e-8):
     """
-    Solves a general norm approximation problem
+    Solves a general norm minimization problem
         minimize_x \sum_k \lambda_k * ||A_k x - b_k||_{p_k}^{p_k}
 
     :param A_list: List of matrices A_k \in \mathbb{R}^{m_k \times n}

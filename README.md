@@ -1,11 +1,11 @@
-# General Norm Approximation Solver
+# General Norm Minimization Solver
 
 written by Yasuyuki Matsushita (yasumat@ist.osaka-u.ac.jp) at Osaka University.
 
-### What is Norm Approximation?
+### What is Norm Minimization?
 
 In various scientific computing tasks, there arises a need for minimizing some vector norm, 
-or a combination of different vector norms. A generalized norm approximation problem can be written as
+or a combination of different vector norms. A generalized norm minimization problem can be written as
 
 <img src="http://latex.codecogs.com/gif.latex?%5Cmin_%5Cmathbf%7Bx%7D%20%5Csum_%7Bk%3D1%7D%5EK%20%5Clambda_k%20%5C%7C%5Cmathbf%7BA%7D_k%20%5Cmathbf%7Bx%7D%20-%20%5Cmathbf%7Bb%7D_k%20%5C%7C_%7Bp_k%7D%5E%7Bp_k%7D"/>
 
@@ -54,7 +54,7 @@ which corresponds to  <img src="http://latex.codecogs.com/gif.latex?k%3D3"/> and
 This implementation can take arbitrary numbers of norm terms, each of them is linear but can have different norm, constraint matrix, and vector. 
 ### How to use?
 
-Call a function ``solve`` defined in ``normapprox.py`` by appropriately forming matrices 
+Call a function ``solve`` defined in ``normmin.py`` by appropriately forming matrices 
 <img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Cmathbf%7BA%7D_k%5C%7D"/> and 
 vectors <img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Cmathbf%7Bb%7D_k%5C%7D"/> as well as 
 lists of weights <img src="http://latex.codecogs.com/gif.latex?%5C%7B%5Clambda_k%5C%7D"/>
@@ -104,13 +104,13 @@ where
 These problems Case 1 and Case 2 can be solved by the following code:
 
 
-    import normapprox as na
+    from normmin import solve
     ...
     # Case 1: Conventional least-squares fitting
-    w1, residue1, ite1 = na.solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[2])
+    w1, residue1, ite1 = solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[2])
     # Case 2: Least-squares fitting with L2 regularization (special form of Ridge regression)
-    w2, residue2, ite2 = na.solve(A_list=[A, np.identity(n)], b_list=[b, np.zeros(n)],
-                                  lambda_list=[1, 1e-4], p_list=[2, 2])
+    w2, residue2, ite2 = solve(A_list=[A, np.identity(n)], b_list=[b, np.zeros(n)],
+                               lambda_list=[1, 1e-4], p_list=[2, 2])
 
 
 Below shows the result of Case 1 and Case 2 fittings. With a regularizer (Case 2), it can be seen that the issue of

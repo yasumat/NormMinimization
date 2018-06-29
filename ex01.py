@@ -1,15 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import normapprox as na
+from normmin import solve
 
 '''
-Example of polynomial fitting with a regularizer using Norm Approximation
+Example of polynomial fitting with a regularizer using norm minimization
    y = w_1 * x^d + w_2 * x^(d-1) ... + w_d * x + w_{d+1}
 '''
 
 
-def true_fun(X):
-    return np.cos(1.5 * np.pi * X)
+def true_fun(x):
+    return np.cos(1.5 * np.pi * x)
 
 
 if __name__=='__main__':
@@ -33,10 +33,10 @@ if __name__=='__main__':
             A[r, c] = np.power(x[r], n-1-c)
 
     # Case 1: Conventional least-squares fitting
-    w1, residue1, ite1 = na.solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[2])
+    w1, residue1, ite1 = solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[2])
     # Case 2: Least-squares fitting with L2 regularization (special form of Ridge regression)
-    w2, residue2, ite2 = na.solve(A_list=[A, np.identity(n)], b_list=[b, np.zeros(n)],
-                                  lambda_list=[1, 1e-4], p_list=[2, 2])
+    w2, residue2, ite2 = solve(A_list=[A, np.identity(n)], b_list=[b, np.zeros(n)],
+                               lambda_list=[1, 1e-4], p_list=[2, 2])
     plt.style.use('fivethirtyeight')
     f1 = np.poly1d(w1)
     f2 = np.poly1d(w2)
