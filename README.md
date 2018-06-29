@@ -85,7 +85,7 @@ and <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7Bb%7D"/> are formed
 The goal is to estimate a *good* <img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7Bw%7D"/> that best approximates the equality.
 For example, with an L2 metric, this can be formulated as:
 
-Conventional least-squares regression (Case 1): 
+(Case 1) Conventional least-squares regression: 
 <img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bw%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bw%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20"/>
 
 <BR>
@@ -94,7 +94,7 @@ Over-fitting is a common issue in this type of problems when a proper polynomial
 A conventional approach to avoiding this issue is to *regularize* the esimates by some additional constraints. 
 This example penalizes the estimates that have high values using a *regularizer*:
 
-Least-squares regression with a regularizer (Case 2):
+(Case 2) Least-squares regression with a regularizer:
 <img src="https://latex.codecogs.com/gif.latex?%5Cmin_%7B%5Cmathbf%7Bw%7D%7D%20%5C%7C%5Cmathbf%7BA%7D%20%5Cmathbf%7Bw%7D%20-%5Cmathbf%7Bb%7D%5C%7C_2%5E2%20&plus;%20%5Clambda_2%20%5C%7C%5Cmathbf%7Bw%7D%5C%7C_2^2"/>,
 where 
 <img src="http://latex.codecogs.com/gif.latex?%5Clambda_2%20%3D%201.0%5Cmathrm%7Be%7D%5E%7B-4%7D"/> in this particular example.

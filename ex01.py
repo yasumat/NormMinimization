@@ -32,9 +32,9 @@ if __name__=='__main__':
         for c in range(0, n-1):
             A[r, c] = np.power(x[r], n-1-c)
 
-    # Case 1: Conventional least-squares fitting
+    # (Case 1): Conventional least-squares fitting
     w1, residue1, ite1 = solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[2])
-    # Case 2: Least-squares fitting with L2 regularization (special form of Ridge regression)
+    # (Case 2): Least-squares fitting with L2 regularization (special form of Ridge regression)
     w2, residue2, ite2 = solve(A_list=[A, np.identity(n)], b_list=[b, np.zeros(n)],
                                lambda_list=[1, 1e-4], p_list=[2, 2])
     plt.style.use('fivethirtyeight')
