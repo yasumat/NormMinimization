@@ -39,13 +39,14 @@ if __name__=='__main__':
     # (Case 2): L1 sparse regression
     w2, residue2, ite2 = solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[1])
 
+    plt.style.use('fivethirtyeight')
     f1 = np.poly1d(w1)
     f2 = np.poly1d(w2)
     xp = np.linspace(0, 1, 100)
     plt.plot(x, true_fun(x), 'k-.', label='True function')
     plt.plot(xp, f1(xp), 'g-', label='L2')
     plt.plot(xp, f2(xp), 'r-', label='L1')
-    plt.style.use('fivethirtyeight')
+
     plt.scatter(x, y, edgecolor='b', label='data')
     plt.legend()
     plt.xlabel('x')
