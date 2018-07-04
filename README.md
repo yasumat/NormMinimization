@@ -138,7 +138,7 @@ It is simple and efficient but can be affected by outliers.
 <img src="http://latex.codecogs.com/gif.latex?%5Cell_1"/> residual minimization makes the fitting more robust by 
 minimizing the residual vector norm by <img src="http://latex.codecogs.com/gif.latex?%5Cell_1"/>-norm, 
 making the residual vector *sparse*. The sparser residual vector means that there are more zero elements in the vector,
-which then corresponds to that the line (or polynomial) passes through as many data points as possible.
+which then corresponds to that the line (or polynomial) passes through as many data points as possible:
 
 <img src="http://latex.codecogs.com/gif.latex?\min_\mathbf{x}&space;\|\mathbf{A}\mathbf{x}-&space;\mathbf{b}\|_1" title="\min_\mathbf{x} \|\mathbf{A}\mathbf{x}- \mathbf{b}\|_1" />
 
