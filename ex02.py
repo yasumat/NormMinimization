@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from normmin import solve
 
 '''
-Example of robust ling fitting by sparse regression
+Example of robust line fitting by sparse regression
 '''
 
 
@@ -24,7 +24,7 @@ if __name__=='__main__':
 
     # matrix dimensions (m x n matrix)
     m = n_samples
-    n = 2
+    n = 2    # number of unknowns
 
     # Create a linear regression problem
     # y = a x + b, estimate a and b
@@ -39,14 +39,12 @@ if __name__=='__main__':
     # (Case 2): L1 sparse regression
     w2, residue2, ite2 = solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[1])
 
-#    plt.style.use('fivethirtyeight')
     f1 = np.poly1d(w1)
     f2 = np.poly1d(w2)
     xp = np.linspace(0, 1, 100)
     plt.plot(x, true_fun(x), 'k-.', label='True function')
     plt.plot(xp, f1(xp), 'g-', label='L2')
     plt.plot(xp, f2(xp), 'r-', label='L1')
-
     plt.scatter(x, y, edgecolor='b', label='data')
     plt.legend()
     plt.xlabel('x')
