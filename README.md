@@ -117,6 +117,42 @@ Below shows the result of Case 1 and Case 2 fittings. With a regularizer (Case 2
 over-fitting is alleviated.
 
 <img src="./ex01.png"/> 
+
+
+### Example 2: Robust fitting by sparse regression - ex02.py
+
+Here is another example of robust fitting based on sparse regression; specifically, based on 
+<img src="http://latex.codecogs.com/gif.latex?%5Cell_1"/> residual minimization.
+The problem of line or polynomial fitting can be regarded as estimating a parameter vector 
+<img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7Bx%7D"/> that best approximates the relationship 
+<img src="http://latex.codecogs.com/gif.latex?%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D%20%5Capprox%20%5Cmathbf%7Bb%7D"/>.
+In other words, the problem is to minimize the *residual* 
+<img src="http://latex.codecogs.com/gif.latex?\|\mathbf{A}\mathbf{x}-&space;\mathbf{b}\|" title="\|\mathbf{A}\mathbf{x}- \mathbf{b}\|" />
+with some metric, or norm.
+
+Conventional least-squares method uses 
+squared <img src="http://latex.codecogs.com/gif.latex?%5Cell_2"/>-norm minimization written as
+<img src="http://latex.codecogs.com/gif.latex?\min_\mathbf{x}&space;\|\mathbf{A}\mathbf{x}-&space;\mathbf{b}\|_2^2" title="\min_\mathbf{x} \|\mathbf{A}\mathbf{x}- \mathbf{b}\|_2^2" />.
+It is simple and efficient but can be affected by outliers.
+
+<img src="http://latex.codecogs.com/gif.latex?%5Cell_1"/> residual minimization makes the fitting more robust by 
+minimizing the residual vector norm by <img src="http://latex.codecogs.com/gif.latex?%5Cell_1"/>-norm, 
+making the residual vector *sparse*. The sparser residual vector means that there are more zero elements in the vector,
+which then corresponds to that the line (or polynomial) passes through as many data points as possible.
+
+<img src="http://latex.codecogs.com/gif.latex?\min_\mathbf{x}&space;\|\mathbf{A}\mathbf{x}-&space;\mathbf{b}\|_1" title="\min_\mathbf{x} \|\mathbf{A}\mathbf{x}- \mathbf{b}\|_1" />
+
+Below shows the distinction between <img src="http://latex.codecogs.com/gif.latex?%5Cell_1"/> and <img src="http://latex.codecogs.com/gif.latex?%5Cell_2"/>
+residual minimization for the line fitting problem. 
+It can be seen that <img src="http://latex.codecogs.com/gif.latex?%5Cell_1"/> residual minimization makes line fitting robust 
+against outliers.
+
+<img src="./ex02.png"/> 
+ 
+
+
+
+
  
 ### Conditions of use
 

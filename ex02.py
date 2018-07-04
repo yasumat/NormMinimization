@@ -3,52 +3,53 @@ import matplotlib.pyplot as plt
 from normmin import solve
 
 '''
-Example of polynomial fitting with a regularizer using norm minimization
-   y = w_1 * x^d + w_2 * x^(d-1) ... + w_d * x + w_{d+1}
+Example of robust ling fitting by sparse regression
 '''
 
 
 def true_fun(x):
-    return np.cos(1.5 * np.pi * x)
+    return 0.6 * x + 0.1
 
 
 if __name__=='__main__':
-    degree = 15    # degree of polynomial
     n_samples = 30    # number of data points
-
+    n_outliers = 10
     # generate data points
     np.random.seed(0)
     x = np.sort(np.random.rand(n_samples))
-    y = true_fun(x) + np.random.randn(n_samples) * 0.15
+    y = true_fun(x)
+    # perturb y for simulating outliers
+    indices = np.random.choice(n_samples, n_outliers)
+    y[indices] = -y[indices] * np.random.rand(n_outliers)
 
     # matrix dimensions (m x n matrix)
     m = n_samples
-    n = degree + 1
+    n = 2
 
     # Create a linear regression problem
+    # y = a x + b, estimate a and b
+    # y = A w, A = [x | 1], w = [a | b]^T
     A = np.ones((m, n))
     b = y
     for r in range(m):
-        for c in range(0, n-1):
-            A[r, c] = np.power(x[r], n-1-c)
+        A[r, 0] = x[r]
 
     # (Case 1): Conventional least-squares fitting
     w1, residue1, ite1 = solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[2])
-    # (Case 2): Least-squares fitting with L2 regularization (special form of Ridge regression)
-    w2, residue2, ite2 = solve(A_list=[A, np.identity(n)], b_list=[b, np.zeros(n)],
-                               lambda_list=[1, 1e-4], p_list=[2, 2])
-    plt.style.use('fivethirtyeight')
+    # (Case 2): L1 sparse regression
+    w2, residue2, ite2 = solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[1])
+
     f1 = np.poly1d(w1)
     f2 = np.poly1d(w2)
     xp = np.linspace(0, 1, 100)
-    plt.scatter(x, y, edgecolor='b', label='data')
     plt.plot(x, true_fun(x), 'k-.', label='True function')
     plt.plot(xp, f1(xp), 'g-', label='L2')
-    plt.plot(xp, f2(xp), 'r-', label='L2 with regularization')
+    plt.plot(xp, f2(xp), 'r-', label='L1')
+    plt.style.use('fivethirtyeight')
+    plt.scatter(x, y, edgecolor='b', label='data')
     plt.legend()
     plt.xlabel('x')
     plt.ylabel('y')
     plt.xlim((0, 1))
-    plt.ylim((-2, 2))
+    plt.ylim((-1, 1))
     plt.show()
-
