@@ -39,7 +39,7 @@ if __name__=='__main__':
     # (Case 2): L1 sparse regression
     w2, residue2, ite2 = solve(A_list=[A], b_list=[b], lambda_list=[1], p_list=[1])
 
-    plt.style.use('fivethirtyeight')
+#    plt.style.use('fivethirtyeight')
     f1 = np.poly1d(w1)
     f2 = np.poly1d(w2)
     xp = np.linspace(0, 1, 100)
